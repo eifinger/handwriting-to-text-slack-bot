@@ -16,6 +16,7 @@ class ProjectOxfordHandler():
         self._maxNumRetries = 10
         self.url = url
         self.token = token
+        sel.max_height = 3200
 
 
     def processRequest(self, json, data, headers, params ):
@@ -136,6 +137,7 @@ class ProjectOxfordHandler():
 
     def getResultForImage(self, filename):
         """Process the image"""
+        self.resize_image(filename)
         with open(filename, 'rb') as f:
             data = f.read()
 
@@ -163,3 +165,21 @@ class ProjectOxfordHandler():
         # Load the original image, fetched from the URL
         if result is not None and result['status'] == 'Succeeded':
             return result
+
+    def resize_image(self, filename):
+        """Rescale `image` to `target_height` (preserving aspect ratio)."""
+        image = cv2.imread(filename)
+
+        height, width = image.shape[:2]
+        max_height = 3200
+        max_width = 3200
+
+        # only shrink if img is bigger than required
+        if max_height < height or max_width < width:
+            # get scaling factor
+            scaling_factor = max_height / float(height)
+            if max_width/float(width) < scaling_factor:
+                scaling_factor = max_width / float(width)
+            # resize image
+            image = cv2.resize(image, None, fx=scaling_factor, fy=scaling_factor, interpolation=cv2.INTER_AREA)
+        cv2.imwrite(image, filename)
