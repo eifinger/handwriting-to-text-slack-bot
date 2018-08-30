@@ -181,5 +181,6 @@ class ProjectOxfordHandler():
             if max_width/float(width) < scaling_factor:
                 scaling_factor = max_width / float(width)
             # resize image
+            logger.info("Rescaling image with scale:{}".format(scaling_factor))
             image = cv2.resize(image, None, fx=scaling_factor, fy=scaling_factor, interpolation=cv2.INTER_AREA)
         cv2.imwrite(image, filename)
