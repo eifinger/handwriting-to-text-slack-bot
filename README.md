@@ -27,10 +27,14 @@ eifinger/handwriting-to-text-slack-bot:latest
 
 ## Usage
 1. Send a file to your bot or in a channel where you added your bot. Be sure to attach a name to the file
-![uploadImage](images/handwriting-bot-example-upload.png)
+<p align="center">
+  <img width="50%" height="500%" src="images/handwriting-bot-example-upload.png">
+</p>
 
 2. The bot answers with two files. One is a text file containing the identified text entities and the other a visual representation of where he found it
-![uploadImage](images/handwriting-bot-example-redacted.png)
+<p align="center">
+  <img width="50%" height="500%" src="images/handwriting-bot-example-redacted.png">
+</p>
 
 ## Links
 - https://docs.microsoft.com/en-us/azure/cognitive-services/Computer-vision/quickstarts/python-hand-text
