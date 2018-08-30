@@ -15,7 +15,6 @@ class ProjectOxfordHandler():
     def __init__(self, token, url):
         """init"""
         self._maxNumRetries = 10
-        self.logger = logging.getLogger(__name__)
         self.url = url
         self.token = token
 
@@ -37,19 +36,19 @@ class ProjectOxfordHandler():
             response = requests.request( 'post', self.url, json = json, data = data, headers = headers, params = params )
 
             if response.status_code == 429:
-                self.logger.info( "Message: %s" % ( response.json() ) )
+                logging.info( "Message: %s" % ( response.json() ) )
                 if retries <= self._maxNumRetries: 
                     time.sleep(1) 
                     retries += 1
                     continue
                 else: 
-                    self.logger.error( 'Error: failed after retrying!' )
+                    logging.error( 'Error: failed after retrying!' )
                     break
             elif response.status_code == 202:
                 result = response.headers['Operation-Location']
             else:
-                self.logger.error( "Error code: %d" % ( response.status_code ) )
-                self.logger.error( "Message: %s" % ( response.json() ) )
+                logging.error( "Error code: %d" % ( response.status_code ) )
+                logging.error( "Message: %s" % ( response.json() ) )
             break
             
         return result
@@ -69,19 +68,19 @@ class ProjectOxfordHandler():
         while True:
             response = requests.request('get', operationLocation, json=None, data=None, headers=headers, params=None)
             if response.status_code == 429:
-                self.logger.info("Message: %s" % (response.json()))
+                logging.info("Message: %s" % (response.json()))
                 if retries <= self._maxNumRetries:
                     time.sleep(1)
                     retries += 1
                     continue
                 else:
-                    self.logger.error('Error: failed after retrying!')
+                    logging.error('Error: failed after retrying!')
                     break
             elif response.status_code == 200:
                 result = response.json()
             else:
-                self.logger.error("Error code: %d" % (response.status_code))
-                self.logger.error("Message: %s" % (response.json()))
+                logging.error("Error code: %d" % (response.status_code))
+                logging.error("Message: %s" % (response.json()))
             break
 
         return result
