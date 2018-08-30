@@ -1,14 +1,13 @@
 import requests
 import time
 import logging
-import io
 import numpy as np
 import cv2
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
-import uuid
+import os
 
 class ProjectOxfordHandler():
 
@@ -116,13 +115,13 @@ class ProjectOxfordHandler():
         plt.axis('off')
         plt.tight_layout()
         plt.draw()
-        filename = uuid.uuid4()
+        filename = os.path.splitext(filename)[0] + "_annotated" + os.path.splitext(filename)[1]
         plt.savefig(filename, format='png')
         return filename
 
-    def getTextFileFromResult(self, result):
+    def getTextFileFromResult(self, result, filename):
         """Writes the found text entities to a text file"""
-        filename = uuid.uuid4()
+        filename = os.path.splitext(filename)[0] + "_text.txt"
         with open(filename, 'w') as f:
 
             lines = result['recognitionResult']['lines']
@@ -130,7 +129,7 @@ class ProjectOxfordHandler():
             for i in range(len(lines)):
                 words = lines[i]['words']
                 for j in range(len(words)):
-                    text = words[j]['text']
+                    text = words[j]['text'] + " "
                     f.write(text)
                 f.write("\n")
         return filename

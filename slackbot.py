@@ -56,11 +56,13 @@ class Slackbot():
                     if "files" in output and len(output["files"]) > 0:
                         url_private_download = output["files"][0]["url_private_download"]
                         permalink = output["files"][0]["permalink"]
+                        name = output["files"][0]["name"]
                     else:
                         url_private_download = None
                         permalink = None
+                        name = None
                     return output['text'].split(self.AT_BOT)[1].strip().lower(), \
-                           output['channel'], output['user'], True, url_private_download, permalink
+                           output['channel'], output['user'], True, url_private_download, permalink, name
                 else:
                     if output and 'channel' in output and not isinstance(output['channel'],dict) \
                     and 'type' in output and output['type'] == 'message' \
@@ -68,14 +70,16 @@ class Slackbot():
                         if "files" in output and len(output["files"]) > 0:
                             url_private_download = output["files"][0]["url_private_download"]
                             permalink = output["files"][0]["permalink"]
+                            name = output["files"][0]["name"]
                         else:
                             url_private_download = None
                             permalink = None
-                        return output['text'], output['channel'], output['user'], False, url_private_download, permalink
+                            name = None
+                        return output['text'], output['channel'], output['user'], False, url_private_download, permalink, name
 
-        return None, None, None, None, None, None
+        return None, None, None, None, None, None, None
 
-    def send_message(self, message, channel):
+    def send_message(self, channel, message):
         self.slack_client.api_call("chat.postMessage", channel=channel, text=message, as_user=True)
 
     def send_file(self, channel, file):
