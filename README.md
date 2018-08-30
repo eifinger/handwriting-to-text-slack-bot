@@ -7,7 +7,6 @@ A slack bot running in a docker container which recognizes handwritten text for 
 1. Create a Slack Bot and get the token for it as described [here](https://api.slack.com/bot-users#creating-bot-user)
 2. Create a Service Key for Azure Cognitive Services [here](https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/)
 3. Start this container
-
 ```
 sudo docker run \
 -e SLACK_BOT_TOKEN=<YOUR_TOKEN> \
@@ -29,6 +28,7 @@ eifinger/handwriting-to-text-slack-bot:latest
 ## Usage
 1. Send a file to your bot or in a channel where you added your bot. Be sure to attach a name to the file
 ![uploadImage](images/handwriting-bot-example-upload.png)
+
 2. The bot answers with two files. One is a text file containing the identified text entities and the other a visual representation of where he found it
 ![uploadImage](images/handwriting-bot-example-redacted.png)
 
