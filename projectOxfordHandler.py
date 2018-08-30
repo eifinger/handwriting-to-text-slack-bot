@@ -16,7 +16,6 @@ class ProjectOxfordHandler():
         self._maxNumRetries = 10
         self.url = url
         self.token = token
-        sel.max_height = 3200
 
 
     def processRequest(self, json, data, headers, params ):
