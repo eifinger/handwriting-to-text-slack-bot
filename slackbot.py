@@ -49,35 +49,36 @@ class Slackbot():
             directed at the Bot, based on its ID.
         """
         output_list = slack_rtm_output
+
+        text = None
+        channel = None
+        user = None
+        is_at_bot = False
+        url_private_download = None
+        permalink = None
+        name = None
         if output_list and len(output_list) > 0:
             for output in output_list:
+                if "files" in output and len(output["files"]) > 0:
+                    url_private_download = output["files"][0]["url_private_download"]
+                    permalink = output["files"][0]["permalink"]
+                    name = output["files"][0]["name"]
                 if output and 'text' in output and self.AT_BOT in output['text']:
                     # return text after the @ mention, whitespace removed
-                    if "files" in output and len(output["files"]) > 0:
-                        url_private_download = output["files"][0]["url_private_download"]
-                        permalink = output["files"][0]["permalink"]
-                        name = output["files"][0]["name"]
-                    else:
-                        url_private_download = None
-                        permalink = None
-                        name = None
-                    return output['text'].split(self.AT_BOT)[1].strip().lower(), \
-                           output['channel'], output['user'], True, url_private_download, permalink, name
+                   text = output['text'].split(self.AT_BOT)[1].strip().lower()
+                   channel = output['channel']
+                   user = output['user']
+                   is_at_bot = True
                 else:
                     if output and 'channel' in output and not isinstance(output['channel'],dict) \
                     and 'type' in output and output['type'] == 'message' \
                     and 'user' in output and output['user'] != self.BOT_ID:
-                        if "files" in output and len(output["files"]) > 0:
-                            url_private_download = output["files"][0]["url_private_download"]
-                            permalink = output["files"][0]["permalink"]
-                            name = output["files"][0]["name"]
-                        else:
-                            url_private_download = None
-                            permalink = None
-                            name = None
-                        return output['text'], output['channel'], output['user'], False, url_private_download, permalink, name
+                        text = output['text']
+                        channel = output['channel']
+                        user = output['user']
+                        is_at_bot = True
 
-        return None, None, None, None, None, None, None
+        return text, channel, user, is_at_bot, url_private_download, permalink, name
 
     def send_message(self, channel, message):
         self.slack_client.api_call("chat.postMessage", channel=channel, text=message, as_user=True)

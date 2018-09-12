@@ -8,7 +8,7 @@ import uuid
 import shutil
 
 __LOGGER_NAME__ = "handwriting-to-text-slack-bot"
-__VERSION__ = "1.0"
+__VERSION__ = "1.1"
 __SAVE_DIR__ = "/save/"
 
 def main():
@@ -48,7 +48,7 @@ def main():
         logger.info("StarterBot connected and running!")
         while True:
             command, channel, user, is_AT_bot, url_private_download, permalink, filename = bot.parse_slack_output(bot.slack_client.rtm_read())
-            if command and channel and user:
+            if channel and user:
                 if url_private_download and permalink and filename:
                     try:
                         #A file was uploaded

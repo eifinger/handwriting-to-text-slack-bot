@@ -26,7 +26,7 @@ eifinger/handwriting-to-text-slack-bot:latest
 ```
 
 ## Usage
-1. Send a file to your bot or in a channel where you added your bot. Be sure to attach a name to the file
+1. Send a file to your bot or in a channel where you added your bot. ~~Be sure to attach a name to the file.~~ A message for the upload is no longer needed
 <p align="center">
   <img width="50%" height="500%" src="images/handwriting-bot-example-upload.png">
 </p>

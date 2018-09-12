@@ -4,6 +4,7 @@ import logging
 import numpy as np
 import cv2
 import matplotlib as mpl
+#Use backend rendering so we don't require a X Server
 mpl.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
