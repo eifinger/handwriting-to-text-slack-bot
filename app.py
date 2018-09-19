@@ -69,10 +69,11 @@ def main():
                             shutil.move(filename, __SAVE_DIR__ + filename)
                             shutil.move(annotated_image_filename, __SAVE_DIR__ + annotated_image_filename)
                             shutil.move(text_filename, __SAVE_DIR__ + text_filename)
-                        logger.info("Deleting temp files {} and {} and {}".format(filename, annotated_image_filename, text_filename))
-                        os.remove(filename)
-                        os.remove(annotated_image_filename)
-                        os.remove(text_filename)
+                        else:
+                            logger.info("Deleting temp files {} and {} and {}".format(filename, annotated_image_filename, text_filename))
+                            os.remove(filename)
+                            os.remove(annotated_image_filename)
+                            os.remove(text_filename)
                     except Exception:
                         logging.exception("Something went wrong")
                         bot.send_message(channel, "Something went wrong")
