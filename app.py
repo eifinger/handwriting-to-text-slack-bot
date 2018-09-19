@@ -8,7 +8,7 @@ import uuid
 import shutil
 
 __LOGGER_NAME__ = "handwriting-to-text-slack-bot"
-__VERSION__ = "1.1"
+__VERSION__ = "1.2"
 __SAVE_DIR__ = "/save/"
 
 def main():
